@@ -5,6 +5,7 @@ import {
   enable as enableAutoStart,
   isEnabled as isAutoStartEnabled,
 } from '@tauri-apps/plugin-autostart';
+import { CustomBackgroundService } from '@/services/CustomBackgroundService';
 
 class ConfigStore {
   gameLocation = '';
@@ -35,6 +36,10 @@ class ConfigStore {
 
   private async init() {
     this.autoStartEnabled = await isAutoStartEnabled();
+
+    if (this.selectedBackground) {
+      CustomBackgroundService.start();
+    }
   }
 }
 

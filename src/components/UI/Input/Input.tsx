@@ -52,7 +52,7 @@ const FileInput: FC<InputProps> = ({
         onClick={onFileInputClick}
       />
       <Button className={cl.fileInputButton} onClick={onFileInputClick}>
-        {t('input.browseFilesButton')}
+        {t('input.browseFilesButton', 'Select')}
       </Button>
     </div>
   );

@@ -7,7 +7,6 @@ import App from './App';
 import './index.css';
 import { ErrorPage } from '@/pages/common/error';
 import { initLocalization } from '@/common/utils/initLocalization';
-import { CustomBackgroundService } from '@/services/CustomBackgroundService';
 import { createTrayIcon } from '@/common/utils/createTrayIcon';
 
 const closeSplashscreen = async () => {
@@ -60,7 +59,5 @@ const bootstrap = async () => {
 };
 
 void bootstrap();
-
-CustomBackgroundService.start();
 
 void createTrayIcon();

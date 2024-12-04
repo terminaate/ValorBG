@@ -8,8 +8,6 @@
     <title>ValorBG Updater</title>
 </head>
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
     *, *:after, *:before {
         margin: 0;
         padding: 0;
@@ -31,9 +29,6 @@
     }
 
     :root {
-        --font-primary: "Inter", sans-serif;
-        --font-third: "Impact", sans-serif;
-
         --background-primary: #000;
         --background-alt: rgba(0, 0, 0, 0.25);
         --background-red: #FF4655;
@@ -88,9 +83,13 @@
         width: 100%;
         height: 100%;
     }
+
+    .logo {
+        transform: scale(0.3);
+    }
 </style>
 <body>
-<img alt="" src="./logo.png" style="transform: scale(0.2)">
+<img alt="" class="logo" src="./logo.png">
 
 <div class="progressLineContainer">
     <div class="progressLine"></div>
@@ -98,6 +97,12 @@
 <div class="dragContainer" data-tauri-drag-region></div>
 </body>
 <script>
+    if (!window.__TAURI__) {
+        // кастыль
+        location.reload()
+    }
+
+    console.log(window.__TAURI__);
     const tauri = window.__TAURI__;
     const {invoke} = tauri.core;
     const {check} = tauri.updater;
