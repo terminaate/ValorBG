@@ -7,7 +7,6 @@ import App from './App';
 import './index.css';
 import { ErrorPage } from '@/pages/common/error';
 import { initLocalization } from '@/common/utils/initLocalization';
-import { createTrayIcon } from '@/common/utils/createTrayIcon';
 
 const closeSplashscreen = async () => {
   const splashscreen = await Webview.getByLabel('splashscreen');
@@ -59,5 +58,3 @@ const bootstrap = async () => {
 };
 
 void bootstrap();
-
-void createTrayIcon();
