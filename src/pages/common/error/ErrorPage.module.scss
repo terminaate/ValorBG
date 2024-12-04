@@ -1,0 +1,59 @@
+.errorPage {
+  transform: translateY(-48px);
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+
+  background: var(--background-fifth);
+
+  .logo {
+    width: 96px;
+    height: 96px;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+
+    font-weight: 600;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .description {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    line-height: 1.5rem;
+    color: var(--text-secondary);
+  }
+
+  .button {
+    display: flex;
+
+    column-gap: 8px;
+
+    align-items: center;
+
+    color: var(--yellow);
+
+    .text {
+      font-weight: 700;
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+
+    .icon {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}

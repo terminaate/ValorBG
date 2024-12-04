@@ -1,0 +1,63 @@
+.notFoundPage {
+  display: flex;
+  overflow-y: hidden;
+
+  .image {
+    height: 100%;
+    width: 40%;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+
+    justify-content: center;
+    align-items: start;
+
+    .title {
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+
+      .logo {
+        width: 48px;
+        height: 48px;
+      }
+
+      .text {
+        font-weight: 600;
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    .description {
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+      color: var(--text-secondary);
+    }
+
+    .button {
+      display: flex;
+      column-gap: 12px;
+      color: var(--yellow);
+
+      svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      span {
+        font-weight: 700;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+      }
+    }
+  }
+}

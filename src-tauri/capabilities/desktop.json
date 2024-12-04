@@ -1,0 +1,45 @@
+{
+  "identifier": "desktop-capability",
+  "platforms": [
+    "macOS",
+    "windows",
+    "linux"
+  ],
+  "windows": [
+    "main",
+    "splashscreen"
+  ],
+  "permissions": [
+    "core:default",
+    "updater:default",
+    "core:window:default",
+    "core:window:allow-start-dragging",
+    "core:window:allow-minimize",
+    "core:window:allow-unminimize",
+    "core:window:allow-show",
+    "core:window:allow-hide",
+    "core:window:allow-close",
+    "updater:default",
+    "updater:allow-check",
+    "shell:default",
+    {
+      "identifier": "shell:allow-spawn",
+      "allow": [
+        {
+          "name": "tasklist",
+          "cmd": "tasklist",
+          "args": true,
+          "sidecar": false
+        }
+      ]
+    },
+    "shell:allow-open",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "dialog:allow-message",
+    "dialog:allow-ask",
+    "dialog:allow-confirm",
+    "updater:default",
+    "autostart:default"
+  ]
+}

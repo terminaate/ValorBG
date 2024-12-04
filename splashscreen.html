@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>ValorBG Updater</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+    *, *:after, *:before {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /*scrollbar-width: 2px;*/
+        /*scrollbar-color: var(--border-primary) none;*/
+        user-select: none;
+    }
+
+    ::-webkit-scrollbar {
+        width: 2px;
+        border-radius: 2px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--border-primary);
+        width: 2px;
+        border-radius: 2px;
+    }
+
+    :root {
+        --font-primary: "Inter", sans-serif;
+        --font-third: "Impact", sans-serif;
+
+        --background-primary: #000;
+        --background-alt: rgba(0, 0, 0, 0.25);
+        --background-red: #FF4655;
+
+        --border-primary: #282828;
+    }
+
+    body {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        color: var(--text-primary);
+        font-family: var(--font-primary);
+        font-weight: 500;
+        font-style: normal;
+        background-color: var(--background-red);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    button {
+        background-color: var(--background-primary);
+        color: var(--text-primary);
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .progressLineContainer {
+        position: fixed;
+        width: calc(100% - 10px);
+        bottom: 5px;
+        left: 5px;
+        background-color: var(--border-primary);
+        height: 10px;
+        border-radius: 1px;
+    }
+
+    .progressLine {
+        background-color: var(--background-red);
+        height: 100%;
+        width: 0;
+    }
+
+    .dragContainer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<body>
+<img alt="" src="./logo.png" style="transform: scale(0.2)">
+
+<div class="progressLineContainer">
+    <div class="progressLine"></div>
+</div>
+<div class="dragContainer" data-tauri-drag-region></div>
+</body>
+<script>
+    const tauri = window.__TAURI__;
+    const {invoke} = tauri.core;
+    const {check} = tauri.updater;
+    const {relaunch} = tauri.process;
+    const {Webview} = tauri.webview;
+
+    let isMainWindowLoaded = false;
+
+    const currentWebview = Webview.getCurrent();
+
+    currentWebview.listen('main_window_loaded', () => {
+        isMainWindowLoaded = true;
+    })
+
+    // TODO: add updating
+    const progressLine = document.querySelector('.progressLine');
+
+    const wait = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    const setProgress = async (n, instant = false) => {
+        if (instant) {
+            progressLine.style.width = `${n}%`;
+
+            return;
+        }
+
+        const prevWidth = parseInt(progressLine.style.width) || 0;
+
+        for (let i = prevWidth; i <= n; i++) {
+            progressLine.style.width = `${i}%`;
+            await wait(25)
+        }
+    }
+
+    setProgress(10);
+
+    const CHECK_FOR_UPDATE_TIMEOUT = 15000;
+
+    const checkForUpdates = () => {
+        return new Promise((resolve, reject) => {
+            check().then(resolve).catch(reject)
+
+            setTimeout(() => {
+                reject('timeout of server request')
+            }, CHECK_FOR_UPDATE_TIMEOUT)
+        })
+    }
+    const main = async () => {
+        try {
+            const update = await checkForUpdates();
+
+            console.log(update);
+
+            if (update) {
+                console.log(
+                    `found update ${update.version} from ${update.date} with notes ${update.body}`
+                );
+
+                let downloaded = 0;
+                let contentLength = 0;
+
+                // alternatively we could also call update.download() and update.install() separately
+                await update.downloadAndInstall((event) => {
+                    switch (event.event) {
+                        case 'Started': {
+                            contentLength = event.data.contentLength;
+
+                            console.log(`started downloading ${event.data.contentLength} bytes`);
+                            break;
+                        }
+
+                        case 'Progress': {
+                            downloaded += event.data.chunkLength;
+                            setProgress(contentLength / downloaded);
+
+                            console.log(`downloaded ${downloaded} from ${contentLength}`);
+                            break;
+                        }
+
+                        case 'Finished': {
+                            setProgress(100);
+
+                            console.log('download finished');
+                            break;
+                        }
+                    }
+                });
+
+                console.log('update installed');
+                await relaunch();
+            }
+        } catch (e) {
+            console.log('update checking catch:', e);
+        }
+
+        setProgress(100).then(() => {
+            invoke('close_splashscreen')
+        });
+
+        if (isMainWindowLoaded) {
+            invoke('close_splashscreen')
+        }
+    }
+
+    void main();
+</script>
+</html>

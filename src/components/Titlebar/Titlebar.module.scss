@@ -1,0 +1,76 @@
+.titleBarContainer {
+  padding: 20px;
+  padding-block: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 99999;
+  width: 100%;
+  //background: white;
+
+  .pageName {
+    display: flex;
+    align-items: center;
+
+    svg {
+      cursor: pointer;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+  }
+
+  .iconButton {
+    background: none;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    //height: 20px;
+    transition: 0.3s opacity;
+    color: var(--red);
+    //background: white;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1
+    }
+  }
+
+  //.searchInput {
+  //  height: 40px;
+  //}
+  //
+  //.specTextContainer {
+  //  display: flex;
+  //  flex-direction: column;
+  //  row-gap: 5px;
+  //  height: 36px;
+  //  overflow: hidden;
+  //
+  //  span {
+  //    width: max-content;
+  //    font-family: var(--font-primary);
+  //    font-weight: 600;
+  //    font-size: 8px;
+  //    letter-spacing: -0.04em;
+  //    text-transform: uppercase;
+  //    color: var(--red);
+  //  }
+  //}
+
+
+  .dragContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    //background: red;
+  }
+}

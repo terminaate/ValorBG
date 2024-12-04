@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+*, *:after, *:before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*scrollbar-width: 2px;*/
+    /*scrollbar-color: var(--border-primary) none;*/
+    user-select: none;
+}
+
+::-webkit-scrollbar {
+    width: 2px;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-primary);
+    width: 2px;
+    border-radius: 2px;
+}
+
+:root {
+    --font-primary: "Inter", sans-serif;
+    --font-secondary: "Impact", sans-serif;
+
+    --background-primary: #000;
+    --background-alt: rgba(0, 0, 0, 0.25);
+    --background-red: #FF4655;
+    --background-hover: #141414;
+
+    --text-primary: #e7e7e7;
+    --text-secondary: #7c7c7c;
+    --text-disabled: #282828;
+
+    --border-primary: #282828;
+
+    --icon-primary: #ddd;
+    --icon-secondary: #282828;
+}
+
+body {
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    font-weight: 500;
+    font-style: normal;
+    background-color: var(--background-primary);
+}
+
+.iconPlaceholder {
+    width: 28px;
+    height: 28px;
+    background-color: #282828;
+}
+
+button {
+    background-color: var(--background-primary);
+    color: var(--text-primary);
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
