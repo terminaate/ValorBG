@@ -10,22 +10,22 @@ const onExitClick = () => {
   console.log('on exit click');
 };
 
-const menu = await Menu.new({
-  items: [
-    {
-      id: 'exit',
-      text: 'Exit',
-      action: onExitClick,
-    },
-    {
-      id: 'open',
-      text: 'Open',
-      action: onOpenClick,
-    },
-  ],
-});
-
 export const createTrayIcon = async () => {
+  const menu = await Menu.new({
+    items: [
+      {
+        id: 'exit',
+        text: 'Exit',
+        action: onExitClick,
+      },
+      {
+        id: 'open',
+        text: 'Open',
+        action: onOpenClick,
+      },
+    ],
+  });
+
   const tray = await TrayIcon.new({
     title: 'ValorBG',
     icon: (await defaultWindowIcon())!,
