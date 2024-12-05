@@ -3,6 +3,7 @@ import { configurePersistable } from 'mobx-persist-store';
 import { ErrorBoundary } from 'react-error-boundary';
 import { IconContext } from 'react-icons';
 import { Webview } from '@tauri-apps/api/webview';
+import { getVersion } from '@tauri-apps/api/app';
 import App from './App';
 import './index.css';
 import { ErrorPage } from '@/pages/common/error';
@@ -50,7 +51,7 @@ const bootstrap = async () => {
     { delay: 200, fireImmediately: false },
   );
 
-  await initLocalization();
+  initLocalization();
 
   createRoot(document.getElementById('root')!).render(
     <ErrorBoundary FallbackComponent={ErrorPage}>
@@ -64,3 +65,5 @@ const bootstrap = async () => {
 };
 
 void bootstrap();
+
+getVersion().then(console.log);
