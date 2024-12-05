@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import { copyFile, exists, mkdir } from '@tauri-apps/plugin-fs';
 import * as path from '@tauri-apps/api/path';
 import { appDataDir } from '@tauri-apps/api/path';
-import { runInAction } from 'mobx';
 import { FC, useRef } from 'react';
 import { convertFileSrc } from '@tauri-apps/api/core';
 import cl from './HomePage.module.scss';
@@ -34,9 +33,7 @@ const CustomBackground: FC<CustomBackgroundProps> = observer(
     };
 
     const onClick = () => {
-      runInAction(() => {
-        customBackgroundsStore.selectedBackground = backgroundPath;
-      });
+      customBackgroundsStore.setSelectedBackground(backgroundPath);
     };
 
     return (
