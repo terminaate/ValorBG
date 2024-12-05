@@ -1,4 +1,4 @@
-import { makeObservable, observable, reaction } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 import {
   BaseDirectory,
@@ -29,6 +29,8 @@ class CustomBackgroundsStore {
     makeObservable(this, {
       customBackgrounds: observable,
       selectedBackground: observable,
+      setSelectedBackground: action,
+      addNewCustomBackground: action,
     });
 
     void makePersistable(this, {
@@ -36,17 +38,29 @@ class CustomBackgroundsStore {
       name: 'CustomBackgroundsStore',
       properties: ['customBackgrounds', 'selectedBackground'],
     }).then(this.init.bind(this));
+  }
 
-    reaction(
-      () => this.selectedBackground,
-      (curr) => {
-        if (this.checkInterval !== null || !curr) {
-          return;
-        }
+  public addNewCustomBackground(path: string) {
+    this.customBackgrounds.push(path);
+  }
 
-        this.startCheckInterval(CustomBackgroundsStore.START_HEARTBEAT_TIME);
-      },
-    );
+  public setSelectedBackground(path: string | null) {
+    this.selectedBackground = path;
+
+    if (path === null) {
+      if (this.checkInterval) {
+        clearInterval(this.checkInterval);
+      }
+
+      return;
+    }
+
+    if (this.isOriginalBackgroundReplaced) {
+      this.injectCustomBackground();
+      return;
+    }
+
+    this.startCheckInterval(CustomBackgroundsStore.START_HEARTBEAT_TIME);
   }
 
   private async getHomeScreenFileName() {

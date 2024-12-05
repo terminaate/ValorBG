@@ -92,10 +92,8 @@ const HomePage = observer(() => {
 
     await copyFile(result, distUrl);
 
-    runInAction(() => {
-      customBackgroundsStore.customBackgrounds.push(distUrl);
-      customBackgroundsStore.selectedBackground = distUrl;
-    });
+    customBackgroundsStore.addNewCustomBackground(distUrl);
+    customBackgroundsStore.setSelectedBackground(distUrl);
   };
 
   return (
