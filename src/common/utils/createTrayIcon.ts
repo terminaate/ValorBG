@@ -17,7 +17,6 @@ export const createTrayIcon = async () => {
   };
 
   const menu = await Menu.new({
-    id: 'ValorBG Menu',
     items: [
       {
         id: 'open',
