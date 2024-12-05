@@ -96,18 +96,11 @@
 </div>
 <div class="dragContainer" data-tauri-drag-region></div>
 </body>
-<script>
-    // if (!window.__TAURI__) {
-    //     // кастыль
-    //     location.reload()
-    // }
-
-    console.log(window.__TAURI__);
-    const tauri = window.__TAURI__;
-    const {invoke} = tauri.core;
-    const {check} = tauri.updater;
-    const {relaunch} = tauri.process;
-    const {Webview} = tauri.webview;
+<script type="module">
+    import {invoke} from '@tauri-apps/api/core'
+    import {Webview} from '@tauri-apps/api/webview'
+    import {check} from '@tauri-apps/plugin-updater'
+    import {relaunch} from '@tauri-apps/plugin-process'
 
     let isMainWindowLoaded = false;
 

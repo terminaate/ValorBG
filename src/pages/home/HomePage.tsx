@@ -1,7 +1,7 @@
 import { open } from '@tauri-apps/plugin-dialog';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { copyFile } from '@tauri-apps/plugin-fs';
+import { copyFile, exists, mkdir } from '@tauri-apps/plugin-fs';
 import * as path from '@tauri-apps/api/path';
 import { appDataDir } from '@tauri-apps/api/path';
 import { runInAction } from 'mobx';
@@ -87,6 +87,10 @@ const HomePage = observer(() => {
     }
 
     const id = String(Math.floor(Date.now() * Math.random()));
+
+    if (!(await exists(await appDataDir()))) {
+      await mkdir(await appDataDir());
+    }
 
     const distUrl = await path.resolve(await appDataDir(), `${id}.mp4`);
 
