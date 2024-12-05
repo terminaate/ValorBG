@@ -3,6 +3,7 @@ import * as path from '@tauri-apps/api/path';
 import { isProcessRunning } from '@/common/utils/isProcessRunning';
 import { configStore } from '@/store/configStore';
 
+// TODO: transforms this into store
 export class CustomBackgroundService {
   private static readonly VIDEO_KEYWORD = 'Homescreen';
   private static readonly VALORANT_PROCESS_NAME = 'VALORANT.exe';

@@ -25,7 +25,7 @@ pub fn run() {
         builder = builder.plugin(tauri_plugin_single_instance::init(|app, args, cwd| {
             let _ = app.get_webview_window("main")
                        .expect("no main window")
-                       .set_focus();
+                       .show();
         }));
     }
 
@@ -41,12 +41,6 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_shell::init())
         .invoke_handler(tauri::generate_handler![close_splashscreen])
-        .build(tauri::generate_context!())
+        .run(tauri::generate_context!())
         .expect("error while running tauri application")
-        .run(|_app_handle, event| match event {
-            tauri::RunEvent::ExitRequested { api, .. } => {
-              api.prevent_exit();
-            }
-            _ => {}
-        });
 }

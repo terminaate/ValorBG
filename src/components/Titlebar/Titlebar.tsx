@@ -40,7 +40,7 @@ export const Titlebar = observer(() => {
         <button className={cl.iconButton} onClick={() => appWindow.minimize()}>
           <VscChromeMinimize size={25} />
         </button>
-        <button className={cl.iconButton} onClick={() => appWindow.close()}>
+        <button className={cl.iconButton} onClick={() => appWindow.hide()}>
           <VscChromeClose size={25} />
         </button>
       </div>
