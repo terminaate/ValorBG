@@ -1,6 +1,6 @@
 [package]
 name = "valorbg"
-version = "1.0.1"
+version = "1.0.2"
 description = "ValorBG"
 authors = ["Terminaate"]
 edition = "2021"
