@@ -74,6 +74,20 @@
       ]
     },
     {
+      "identifier": "fs:allow-mkdir",
+      "allow": [
+        {
+          "path": "**"
+        },
+        {
+          "path": "**/*"
+        },
+        {
+          "path": "/**/*"
+        }
+      ]
+    },
+    {
       "identifier": "fs:allow-remove",
       "allow": [
         {

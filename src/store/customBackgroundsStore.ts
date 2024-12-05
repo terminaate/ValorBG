@@ -45,6 +45,8 @@ class CustomBackgroundsStore {
   }
 
   public setSelectedBackground(path: string | null) {
+    console.log('selecting background');
+
     this.selectedBackground = path;
 
     if (path === null) {
@@ -56,6 +58,7 @@ class CustomBackgroundsStore {
     }
 
     if (this.isOriginalBackgroundReplaced) {
+      console.log('selecting background: injecting new background');
       this.injectCustomBackground();
       return;
     }

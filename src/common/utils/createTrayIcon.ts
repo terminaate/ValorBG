@@ -12,7 +12,8 @@ export const createTrayIcon = async () => {
   const onOpenClick = async () => {
     const appWindow = getCurrentWebviewWindow();
 
-    appWindow.show();
+    await appWindow.show();
+    appWindow.setFocus();
   };
 
   const menu = await Menu.new({
