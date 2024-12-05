@@ -110,9 +110,11 @@ class CustomBackgroundsStore {
       homeScreenFileName,
     );
 
-    await copyFile(homeScreenFilePath, homeScreenFileName, {
-      toPathBaseDir: BaseDirectory.Temp,
-    });
+    if (!this.isOriginalBackgroundReplaced) {
+      await copyFile(homeScreenFilePath, homeScreenFileName, {
+        toPathBaseDir: BaseDirectory.Temp,
+      });
+    }
 
     await remove(homeScreenFilePath);
 
