@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "identifier": "com.valorbg.app",
   "productName": "ValorBG",
   "mainBinaryName": "ValorBG",
