@@ -10,6 +10,7 @@ import { convertFileSrc } from '@tauri-apps/api/core';
 import cl from './HomePage.module.scss';
 import { BasicPage } from '$/UI/BasicPage';
 import { configStore } from '@/store/configStore';
+import { customBackgroundsStore } from '@/store/customBackgroundsStore';
 
 type CustomBackgroundProps = {
   backgroundPath: string;
@@ -34,7 +35,7 @@ const CustomBackground: FC<CustomBackgroundProps> = observer(
 
     const onClick = () => {
       runInAction(() => {
-        configStore.selectedBackground = backgroundPath;
+        customBackgroundsStore.selectedBackground = backgroundPath;
       });
     };
 
@@ -45,7 +46,9 @@ const CustomBackground: FC<CustomBackgroundProps> = observer(
         onMouseLeave={onMouseLeave}
         className={cl.customBackground}
         onClick={onClick}
-        data-active={configStore.selectedBackground === backgroundPath}
+        data-active={
+          customBackgroundsStore.selectedBackground === backgroundPath
+        }
       >
         <video
           muted
@@ -90,8 +93,8 @@ const HomePage = observer(() => {
     await copyFile(result, distUrl);
 
     runInAction(() => {
-      configStore.customBackgrounds.push(distUrl);
-      configStore.selectedBackground = distUrl;
+      customBackgroundsStore.customBackgrounds.push(distUrl);
+      customBackgroundsStore.selectedBackground = distUrl;
     });
   };
 
@@ -100,7 +103,7 @@ const HomePage = observer(() => {
       <div onClick={addNewBackground} className={cl.customBackground}>
         <div className={cl.preview}>Create new</div>
       </div>
-      {configStore.customBackgrounds.map((backgroundPath) => (
+      {customBackgroundsStore.customBackgrounds.map((backgroundPath) => (
         <CustomBackground
           key={backgroundPath}
           backgroundPath={backgroundPath}
