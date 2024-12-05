@@ -34,7 +34,6 @@ export const createTrayIcon = async () => {
   const tray = await TrayIcon.new({
     title: 'ValorBG',
     icon: (await defaultWindowIcon())!,
-    id: 'ValorBG',
     tooltip: 'ValorBG',
     menu,
     menuOnLeftClick: true,
