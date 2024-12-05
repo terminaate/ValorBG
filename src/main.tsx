@@ -10,7 +10,6 @@ import { ErrorPage } from '@/pages/common/error';
 import { initLocalization } from '@/common/utils/initLocalization';
 import { createTrayIcon } from '@/common/utils/createTrayIcon';
 
-// TODO 3: test single instance
 // TODO 7: fix issue with clicking on icons
 
 const closeSplashscreen = async () => {

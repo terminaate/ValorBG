@@ -44,10 +44,19 @@ class CustomBackgroundsStore {
     this.customBackgrounds.push(path);
   }
 
+  public async removeCustomBackground(path: string) {
+    const candidate = this.customBackgrounds.findIndex((o) => o === path);
+    if (candidate === -1) {
+      return;
+    }
+
+    this.customBackgrounds.splice(candidate, 1);
+
+    await remove(path);
+  }
+
   public setSelectedBackground(path: string | null) {
     console.log('selecting background');
-
-    this.selectedBackground = path;
 
     if (path === null) {
       if (this.checkInterval) {
@@ -59,11 +68,15 @@ class CustomBackgroundsStore {
 
     if (this.isOriginalBackgroundReplaced) {
       console.log('selecting background: injecting new background');
-      this.injectCustomBackground();
+      this.injectCustomBackground().then(() => {
+        this.selectedBackground = path;
+      });
       return;
     }
 
     this.startCheckInterval(CustomBackgroundsStore.START_HEARTBEAT_TIME);
+
+    this.selectedBackground = path;
   }
 
   private async getHomeScreenFileName() {
@@ -148,6 +161,7 @@ class CustomBackgroundsStore {
     });
 
     if (!isCachedOriginalFileExists) {
+      console.log('cached version not exist');
       return;
     }
 

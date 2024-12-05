@@ -4,8 +4,9 @@ import { observer } from 'mobx-react';
 import { copyFile, exists, mkdir } from '@tauri-apps/plugin-fs';
 import * as path from '@tauri-apps/api/path';
 import { appDataDir } from '@tauri-apps/api/path';
-import { FC, useRef } from 'react';
+import { FC, MouseEvent, useRef } from 'react';
 import { convertFileSrc } from '@tauri-apps/api/core';
+import { BiTrash } from 'react-icons/bi';
 import cl from './HomePage.module.scss';
 import { BasicPage } from '$/UI/BasicPage';
 import { configStore } from '@/store/configStore';
@@ -36,6 +37,12 @@ const CustomBackground: FC<CustomBackgroundProps> = observer(
       customBackgroundsStore.setSelectedBackground(backgroundPath);
     };
 
+    const onDeleteButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+
+      customBackgroundsStore.removeCustomBackground(backgroundPath);
+    };
+
     return (
       <div
         key={backgroundPath}
@@ -47,6 +54,12 @@ const CustomBackground: FC<CustomBackgroundProps> = observer(
           customBackgroundsStore.selectedBackground === backgroundPath
         }
       >
+        <button
+          onClick={onDeleteButtonClick}
+          className={cl.backgroundDeleteButton}
+        >
+          <BiTrash color={'var(--background-red)'} size={20} />
+        </button>
         <video
           muted
           loop
