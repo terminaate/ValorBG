@@ -31,6 +31,7 @@ class CustomBackgroundsStore {
       selectedBackground: observable,
       setSelectedBackground: action,
       addNewCustomBackground: action,
+      removeCustomBackground: action,
     });
 
     void makePersistable(this, {
@@ -52,6 +53,11 @@ class CustomBackgroundsStore {
 
     this.customBackgrounds.splice(candidate, 1);
 
+    if (path === this.selectedBackground) {
+      this.selectedBackground =
+        this.customBackgrounds[this.customBackgrounds.length - 1] || null;
+    }
+
     await remove(path);
   }
 
@@ -63,12 +69,14 @@ class CustomBackgroundsStore {
         clearInterval(this.checkInterval);
       }
 
+      this.selectedBackground = path;
+
       return;
     }
 
     if (this.isOriginalBackgroundReplaced) {
       console.log('selecting background: injecting new background');
-      this.injectCustomBackground().then(() => {
+      this.injectCustomBackground(path).then(() => {
         this.selectedBackground = path;
       });
       return;
@@ -92,8 +100,10 @@ class CustomBackgroundsStore {
     }
   }
 
-  private async injectCustomBackground() {
-    if (!this.selectedBackground) {
+  private async injectCustomBackground(
+    selectedBackground = this.selectedBackground,
+  ) {
+    if (!selectedBackground) {
       return;
     }
 
@@ -120,10 +130,10 @@ class CustomBackgroundsStore {
 
     console.log(`deleting original background video at: ${homeScreenFilePath}`);
 
-    await copyFile(this.selectedBackground, homeScreenFilePath);
+    await copyFile(selectedBackground, homeScreenFilePath);
 
     console.log(
-      `copying custom video from ${this.selectedBackground} to ${homeScreenFilePath} `,
+      `copying custom video from ${selectedBackground} to ${homeScreenFilePath} `,
     );
 
     this.startCheckInterval(CustomBackgroundsStore.END_HEARTBEAT_TIME);
